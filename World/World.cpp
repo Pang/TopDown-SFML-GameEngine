@@ -3,7 +3,7 @@
 
 TileMap World::buildWorld()
 {
-    m_tileset.loadFromFile("Assets/TX Tileset Grass.png");
+    m_tileset.loadFromFile("Assets/Pixel Art Pack/TX Tileset Grass.png");
     unsigned width, height;
 	std::vector<int> tiles = loadCSV(width, height);
 

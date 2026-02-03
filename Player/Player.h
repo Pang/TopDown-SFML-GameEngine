@@ -13,8 +13,10 @@ public:
     sf::Vector2f getPosition() const;
 
 private:
-    sf::RectangleShape m_shape;
     sf::Vector2f m_velocity;
+    sf::Texture m_playerTexture;
+    sf::Vector2i currentPlayerSprite;
 
-    float m_speed = 200.f; // units per second
+    float m_speed = 200.f;
+	bool isFacingLeft;
 };

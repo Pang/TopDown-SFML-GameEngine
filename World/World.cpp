@@ -1,9 +1,11 @@
 #include "World.h"
 #include <fstream>
 
+static constexpr int TILE_SIZE = 16;
+
 TileMap World::buildWorld()
 {
-    if (!m_tileset.loadFromFile("Assets/Pixel Art Pack/TX Tileset Grass.png"))
+    if (!m_tileset.loadFromFile("Assets/Snoblin Dungeon/Tiles/ground_dungeon.png"))
     {
         throw std::runtime_error("Couldn't find spritesheet");
     }
@@ -11,11 +13,11 @@ TileMap World::buildWorld()
     unsigned width, height;
 	std::vector<int> tiles = loadCSV(width, height);
 
-    if (tiles.size() != levelWidth * levelHeight)
+    if (tiles.size() != width * height)
         throw std::runtime_error("Tile count does not match map dimensions");
 
     TileMap map;
-    if (!map.load(m_tileset, { 32, 32 }, tiles, width, height))
+    if (!map.load(m_tileset, { TILE_SIZE, TILE_SIZE }, tiles, width, height))
         throw std::runtime_error("Failed to load tilemap");
 
     return map;

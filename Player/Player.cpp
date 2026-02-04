@@ -53,8 +53,8 @@ void Player::handleInput(int frame)
     m_tilePos += static_cast<sf::Vector2f>(dir);
 
     m_targetWorldPos = {
-        m_tilePos.x * TILE_SIZE * 1.f,
-        m_tilePos.y * TILE_SIZE * 1.f
+        m_tilePos.x * TILE_SIZE * .5f,
+        m_tilePos.y * TILE_SIZE * .5f
     };
 
     m_moveTimer = 0.f;
@@ -88,6 +88,7 @@ void Player::draw(sf::RenderWindow& window) const
 	if (m_isFacingLeft) width = -32;
 	else width = 32;
 
+    playerSprite.setOrigin({ 8.f, 12.f });
     playerSprite.setTextureRect(sf::IntRect(m_currentPlayerSprite, sf::Vector2i(width, TILE_SIZE)));
     playerSprite.setPosition(m_currentPos);
     window.draw(playerSprite);

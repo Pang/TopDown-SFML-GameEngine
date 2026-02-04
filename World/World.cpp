@@ -4,9 +4,9 @@
 static constexpr int TILE_SIZE = 16;
 
 void World::loadTileMaps() {
-    //loadSpecificMap(m_floorsTileMap, m_floorTileset, "Assets/Snoblin Dungeon/Tiles/ground_dungeon.png", "Assets/world.csv");
-    std::vector<int> tiles = loadSpecificMap(m_dungeonTileMap, m_dungeonTileset, "Assets/Snoblin Dungeon/Tiles/walls_dungeon.png", "Assets/walls.csv");
-    SetBorderCollisionTiles(tiles);
+    loadSpecificMap(m_floorsTileMap, m_floorTileset, "Assets/Snoblin Dungeon/Tiles/walls_dungeon.png", "Assets/floor.csv");
+    std::vector<int> wallTilesVec = loadSpecificMap(m_wallsTileMap, m_wallsTileset, "Assets/Snoblin Dungeon/Tiles/walls_dungeon.png", "Assets/walls.csv");
+    SetBorderCollisionTiles(wallTilesVec);
 }
 
 std::vector<int> World::loadSpecificMap(TileMap& tileMap, sf::Texture& texture, const std::string& textureFile, const std::string& csvFile) {
@@ -24,19 +24,14 @@ std::vector<int> World::loadSpecificMap(TileMap& tileMap, sf::Texture& texture, 
 }
 
 void World::renderTileMaps(sf::RenderWindow& window) {
-    //window.draw(m_floorsTileMap);
-    window.draw(m_dungeonTileMap);
+    window.draw(m_floorsTileMap);
+    window.draw(m_wallsTileMap);
 }
 
 void World::SetBorderCollisionTiles(std::vector<int> tiles) {
-    unsigned width, height;
-    std::vector<int> tilesA = loadCSV(width, height, "Assets/collisions.csv");
-    if (tilesA.size() != width * height)
-        throw std::runtime_error("Tiles count does not match map dimensions");
-
-    m_collisionMap.resize(tilesA.size());
-    for (unsigned i = 0; i < tilesA.size(); i++) {
-        if (tilesA[i] == 1) m_collisionMap[i] = true;
+    m_collisionMap.resize(tiles.size());
+    for (unsigned i = 0; i < tiles.size(); i++) {
+        if (tiles[i] != -1) m_collisionMap[i] = true;
     }
 }
 

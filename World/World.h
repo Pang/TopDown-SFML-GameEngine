@@ -14,8 +14,10 @@ private:
 	void SetBorderCollisionTiles(std::vector<int> tiles);
 private:
 	sf::Texture m_floorTileset;
+	sf::Texture m_wallsTileset;
 	sf::Texture m_dungeonTileset;
 	TileMap m_floorsTileMap;
+	TileMap m_wallsTileMap;
 	TileMap m_dungeonTileMap;
 
 	std::vector<bool> m_collisionMap;

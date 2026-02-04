@@ -1,3 +1,6 @@
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+
 #include <SFML/Graphics.hpp>
 #include "Player/Player.h"
 #include "World/World.h"
@@ -8,6 +11,8 @@ float frameDuration = 1.f / animationFPS;
 
 int main()
 {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     sf::Clock clock;
     Player player;
     World world;
@@ -46,7 +51,9 @@ int main()
 		camera.updateCamera(player.getCamPosition(), dt);
         window.setView(camera.viewCam);
         window.clear();
-		world.renderTileMaps(window);
+        world.renderTileMaps(window, Floor);
+        world.renderTileMaps(window, Walls);
+        world.renderTileMaps(window, Objects);
         player.draw(window);
         window.display();
     }

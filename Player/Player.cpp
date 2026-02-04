@@ -5,10 +5,11 @@
 #include <iostream>
 
 static constexpr int TILE_SIZE = 32;
+static constexpr int TILE_ROW_LENGTH = 11;
 
 Player::Player()
 {
-    m_tilePos = { 1, 1};
+    m_tilePos = { 2, 10 };
     sf::Vector2f startPos = { m_tilePos.x * TILE_SIZE * .5f, m_tilePos.y * TILE_SIZE * .5f };
     if (!m_playerTexture.loadFromFile("Assets/Snoblin Villagers/Human Nobleman/human_nobleman.png"))
     {
@@ -52,8 +53,7 @@ void Player::handleInput(int frame, std::vector<bool> collisionMap)
     }
 
     sf::Vector2f tilePos = m_tilePos + static_cast<sf::Vector2f>(dir);
-
-    if (collisionMap[tilePos.x + tilePos.y * 9]) return;
+    if (collisionMap[tilePos.x + tilePos.y * TILE_ROW_LENGTH]) return;
 
     m_startWorldPos = m_worldPos;
     m_tilePos += static_cast<sf::Vector2f>(dir);

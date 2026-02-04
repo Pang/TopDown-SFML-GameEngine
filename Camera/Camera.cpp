@@ -5,7 +5,7 @@ sf::Vector2f currentCameraPos;
 
 void Camera::setupCamera(sf::Vector2f camPosition) {
     currentCameraPos = camPosition;
-    viewCam.setSize({ 400, 300 });
+    viewCam.setSize({ 400,300 });
     viewCam.setCenter(currentCameraPos);
 }
 

@@ -16,6 +16,7 @@ public:
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
+private:
     sf::VertexArray m_vertices;
     const sf::Texture* m_tileset = nullptr;
 };

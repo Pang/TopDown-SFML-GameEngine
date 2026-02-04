@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include "TileMap/TileMap.h"
 #include "Player/Player.h"
 #include "World/World.h"
 #include "Camera/Camera.h"
@@ -14,8 +13,8 @@ int main()
     World world;
     Camera camera;
 
-    sf::RenderWindow window(sf::VideoMode(), "Top Down RPG", sf::Style::Default, sf::State::Fullscreen);
-    TileMap map = world.buildWorld();
+    sf::RenderWindow window(sf::VideoMode({1300, 800}), "Top Down RPG", sf::Style::Default, sf::State::Windowed);
+    world.loadTileMaps();
 
     camera.setupCamera(player.getCamPosition());
     window.setView(camera.viewCam);
@@ -47,7 +46,7 @@ int main()
 		camera.updateCamera(player.getCamPosition(), dt);
         window.setView(camera.viewCam);
         window.clear();
-        window.draw(map);
+		world.renderTileMaps(window);
         player.draw(window);
         window.display();
     }

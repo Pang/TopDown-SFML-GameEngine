@@ -7,7 +7,8 @@ static constexpr int TILE_SIZE = 32;
 
 Player::Player()
 {
-	sf::Vector2f startPos = { 0, 0 };
+    m_tilePos = { 1, 1};
+    sf::Vector2f startPos = { m_tilePos.x * TILE_SIZE * .5f, m_tilePos.y * TILE_SIZE * .5f };
     if (!m_playerTexture.loadFromFile("Assets/Snoblin Villagers/Human Nobleman/human_nobleman.png"))
     {
         throw std::runtime_error("Couldn't find spritesheet");
@@ -98,7 +99,7 @@ sf::Vector2f Player::getPosition() const {
     return m_currentPos;
 }
 sf::Vector2f Player::getCamPosition() const {
-    return { m_currentPos.x + (TILE_SIZE / 2), m_currentPos.y + (TILE_SIZE / 2) };
+    return { m_currentPos.x + (TILE_SIZE / 4), m_currentPos.y + (TILE_SIZE / 4) };
 }
 
 sf::Vector2i Player::animatePlayerMovement(int frame, int row) {

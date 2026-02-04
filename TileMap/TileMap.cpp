@@ -1,4 +1,4 @@
-#include "TileMap.h"
+﻿#include "TileMap.h"
 
 bool TileMap::load(
     const sf::Texture& tileset,
@@ -38,6 +38,11 @@ bool TileMap::load(
 
             float tx = static_cast<float>(tu * tileSize.x);
             float ty = static_cast<float>(tv * tileSize.y);
+
+            if (tileNumber == -1) {
+                tx = static_cast<float>(tileset.getSize().x);
+                ty = static_cast<float>(tileset.getSize().y);
+            }
 
             // Triangle 1
             quad[0].position = { px, py };

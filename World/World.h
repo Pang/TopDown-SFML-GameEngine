@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "../TileMap/TileMap.h"
-#include "DrawLayer.h"
+#include "../Enums/DrawLayer.h"
 
 class World
 {

@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "PlayerAnimation.h"
+#include "../Enums/Animation.h"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <iostream>

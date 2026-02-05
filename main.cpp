@@ -1,13 +1,11 @@
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
+#include "main.h"
 
-#include <SFML/Graphics.hpp>
-#include "Player/Player.h"
-#include "World/World.h"
-#include "Camera/Camera.h"
+#include "Npc/Npc.h"
 
-float animationFPS = 12.f;
-float frameDuration = 1.f / animationFPS;
+const float animationFPS = 12.f;
+const float frameDuration = 1.f / animationFPS;
 
 int main()
 {
@@ -17,6 +15,8 @@ int main()
     Player player;
     World world;
     Camera camera;
+
+	Npc goblin(NpcType::Goblin, { 3, 3 }, { 7, 3 });
 
     sf::RenderWindow window(sf::VideoMode({1300, 800}), "Top Down RPG", sf::Style::Default, sf::State::Windowed);
     world.loadTileMaps();
@@ -46,15 +46,21 @@ int main()
         }
 
         player.handleInput(frame, world.getCollisionMap());
+
         player.update(dt);
+		goblin.update(dt, frame);
 
 		camera.updateCamera(player.getCamPosition(), dt);
         window.setView(camera.viewCam);
         window.clear();
+
         world.renderTileMaps(window, Floor);
         world.renderTileMaps(window, Walls);
         world.renderTileMaps(window, Objects);
+
         player.draw(window);
+        goblin.draw(window);
+
         window.display();
     }
 }

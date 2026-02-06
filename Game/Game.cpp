@@ -1,8 +1,10 @@
 #include "game.h"
 #include <iostream>
 
-Game::Game(sf::RenderWindow& window, Player& player) : font("Assets/Fonts/pixantiqua.ttf"), overlayText(font), m_player(player)
+Game::Game(sf::RenderWindow& window, Player& player, World& world) 
+	: font("Assets/Fonts/pixantiqua.ttf"), overlayText(font), m_player(player), m_world(world)
 {
+	world.loadTileMaps();
 	m_gameState = GS_Playing;
 	m_gameLevel = GL_One;
 
@@ -32,11 +34,7 @@ void Game::setupLevel()
 
 			for (Npc& npc : m_npcs) {
 				npc.onPlayerFound.subscribe([this]() {
-					std::cout << "Player found! Game over.\n";
-					m_gameState = GS_GameOver;
-
-					for (Npc& n : m_npcs)
-						n.onPlayerFound.unsubscribeAll();
+					playerCaught = true;
 				});
 			}
 			break;
@@ -51,16 +49,24 @@ void Game::setupLevel()
 	}
 }
 
-void Game::runLevel(float dt, int frame, std::vector<WorldEntities>& worldEntities)
+void Game::runLevel(float dt, int frame)
 {
 	switch (m_gameState)
 	{
 		case GS_MainMenu:
 			break;
 		case GS_Playing:
-			m_player.update(dt, worldEntities);
+			m_player.handleInput(frame, m_world.getCollisionMap());
+			m_player.update(dt, m_world.m_worldEntities);
 			for (Npc& npc : m_npcs) {
-				npc.update(dt, frame, worldEntities);
+				npc.update(dt, frame, m_world.m_worldEntities);
+			}
+
+			if (playerCaught) {
+				std::cout << "Player caught! Game over.\n";
+				m_gameState = GS_GameOver;
+				for (Npc& npc : m_npcs)
+					npc.onPlayerFound.unsubscribeAll();
 			}
 			break;
 		case GS_PauseMenu:
@@ -73,11 +79,18 @@ void Game::runLevel(float dt, int frame, std::vector<WorldEntities>& worldEntiti
 
 void Game::render(sf::RenderWindow& window)
 {
+
+
 	switch (m_gameState)
 	{
 	case GS_MainMenu:
 		break;
 	case GS_Playing:
+		m_world.renderTileMaps(window, Floor);
+		m_world.renderTileMaps(window, Walls);
+		m_world.renderTileMaps(window, Objects);
+
+		m_player.draw(window);
 		for (Npc& npc : m_npcs) {
 			npc.draw(window);
 		}
@@ -89,8 +102,9 @@ void Game::render(sf::RenderWindow& window)
 		window.draw(overlayText);
 		break;
 	case GS_GameOver:
+		m_player.draw(window);
 		window.setView(window.getDefaultView());
-		setOverlayText("Game over!");
+		setOverlayText("You got caught!");
 		window.draw(overlay);
 		window.draw(overlayText);
 		break;

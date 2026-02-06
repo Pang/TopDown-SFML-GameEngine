@@ -3,14 +3,15 @@
 #include "../Enums/GameLevel.h"
 #include "../Enums/NpcType.h"
 #include "../Player/Player.h"
+#include "../World/World.h"
 #include "../Npc/Npc.h"
 #include <vector>
 
 class Game {
 public:
-	Game(sf::RenderWindow& window, Player& player);
+	Game(sf::RenderWindow& window, Player& player, World& world);
 	void setupLevel();
-	void runLevel(float dt, int frame, std::vector<WorldEntities>& worldEntities);
+	void runLevel(float dt, int frame);
 	void render(sf::RenderWindow& window);
 
 private:
@@ -25,5 +26,8 @@ private:
 	GameLevel m_gameLevel;
 
 	Player& m_player;
+	World& m_world;
 	std::vector<Npc> m_npcs;
+
+	bool playerCaught = false;
 };

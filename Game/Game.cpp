@@ -1,11 +1,16 @@
 #include "game.h"
+#include <iostream>
 
-Game::Game()
+Game::Game(Player& player)
 {
 	m_gameState = GS_Playing;
 	m_gameLevel = GL_One;
-}
 
+	player.onExitReached.subscribe([this]() {
+		std::cout << "Exit reached! Game over.\n";
+		m_gameState = GS_GameOver;
+	});
+}
 
 void Game::setupLevel()
 {

@@ -8,4 +8,5 @@ public:
 	static sf::Vector2f tileToPixel(sf::Vector2i tile);
 	static int tileToIndex(sf::Vector2i tile);
 	static sf::Vector2i animateMovement(int frame, int row, bool& isFacingLeft);
+	static void getAllNonEmptyTileIndices(const std::vector<int>& tilesVec, std::vector<int>& outIndices);
 };

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../Helpers/Helper.h"
+#include "../Helpers/Event.h"
 #include "../Enums/WorldEntities.h"
 
 class Player
@@ -13,6 +14,9 @@ public:
     void draw(sf::RenderWindow& window) const;
     sf::Vector2f getCamPosition() const;
     sf::Vector2f getPosition() const;
+
+public:
+    Event onExitReached;
 
 private:
     sf::Vector2f m_velocity;

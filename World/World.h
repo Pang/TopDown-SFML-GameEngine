@@ -3,6 +3,7 @@
 #include "../TileMap/TileMap.h"
 #include "../Enums/DrawLayer.h"
 #include "../Enums/WorldEntities.h"
+#include "../Helpers/Helper.h"
 
 class World
 {

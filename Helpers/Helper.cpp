@@ -29,3 +29,11 @@ sf::Vector2i Helper::animateMovement(int frame, int row, bool& isFacingLeft) {
 
 	return sf::Vector2i({ col, row });
 }
+
+void Helper::getAllNonEmptyTileIndices(const std::vector<int>& tilesVec, std::vector<int>& outIndices) {
+	outIndices.clear();
+	for (int i = 0; i < tilesVec.size(); i++) {
+		if (tilesVec[i] != -1)
+			outIndices.push_back(i);
+	}
+}

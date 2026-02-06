@@ -15,7 +15,7 @@ int main()
     Player player;
     World world;
     Camera camera;
-    Game game;
+    Game game = Game(player);
 
 	game.setupLevel();
 

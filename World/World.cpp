@@ -9,7 +9,13 @@ void World::loadTileMaps() {
     SetBorderCollisionTiles(wallTilesVec);
 
     loadSpecificMap(m_floorsTileMap, m_floorTileset, "Assets/Snoblin Dungeon/Tiles/ground_dungeon.png", "Assets/floor.csv");
-    loadSpecificMap(m_doorTileMap, m_doorTileset, "Assets/Snoblin Dungeon/Tiles/animated_doors.png", "Assets/door.csv");
+
+    std::vector<int> doorTilesVec = loadSpecificMap(m_doorTileMap, m_doorTileset, "Assets/Snoblin Dungeon/Tiles/animated_doors.png", "Assets/door.csv");
+    std::vector<int> indices;
+    Helper::getAllNonEmptyTileIndices(doorTilesVec, indices);
+    for (int index : indices) {
+        m_worldEntities[index] = WE_EXIT_DOOR;
+	}
 }
 
 std::vector<int> World::loadSpecificMap(TileMap& tileMap, sf::Texture& texture, const std::string& textureFile, const std::string& csvFile) {

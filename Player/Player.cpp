@@ -72,8 +72,7 @@ void Player::handleInput(int frame, std::vector<bool> collisionMap)
 
 void Player::update(float dt, std::vector<WorldEntities>& worldEntities)
 {
-    if (!m_isMoving)
-        return;
+    if (!m_isMoving) return;
 
     m_moveTimer += dt;
     float t = m_moveTimer / m_moveDuration;
@@ -82,8 +81,7 @@ void Player::update(float dt, std::vector<WorldEntities>& worldEntities)
     m_worldPos = m_startWorldPos + (m_targetWorldPos - m_startWorldPos) * t;
 	m_currentPos = m_worldPos;
 
-    if (t >= 1.f)
-    {
+    if (t >= 1.f) {
         m_worldPos = m_targetWorldPos;
         m_isMoving = false;
     }
@@ -92,6 +90,11 @@ void Player::update(float dt, std::vector<WorldEntities>& worldEntities)
     int newIndex = Helper::tileToIndex({ static_cast<int>(m_tilePos.x), static_cast<int>(m_tilePos.y) });
 
     worldEntities[prevIndex] = WE_NONE;
+
+    if (worldEntities[newIndex] == WE_EXIT_DOOR) {
+        onExitReached.invoke();
+    }
+
     worldEntities[newIndex] = WE_PLAYER;
 }
 

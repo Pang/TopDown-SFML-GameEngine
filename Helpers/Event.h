@@ -15,6 +15,10 @@ public:
             h();
     }
 
+    void unsubscribeAll() {
+        handlers.clear();
+    }
+
 private:
     std::vector<Handler> handlers;
 };

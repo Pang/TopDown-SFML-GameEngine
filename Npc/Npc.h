@@ -6,6 +6,7 @@
 #include "../Enums/Animation.h"
 #include "../Enums/WorldEntities.h"
 #include "../Enums/NpcViewDirection.h"
+#include "../Helpers/Event.h"
 
 class Npc
 {
@@ -16,11 +17,15 @@ public:
 	void update(float dt, int frame, std::vector<WorldEntities>& worldEntities);
 	void draw(sf::RenderWindow& window);
 	void faceDirection(NpcState state);
+
 private:
 	void moveTowardsTarget(float dt, int frame, sf::Vector2i& targetTile);
 	void wait(float dt);
 
 	void checkPlayerInView(std::vector<WorldEntities>& worldEntities);
+
+public:
+	Event onPlayerFound;
 
 private:
 	sf::Vector2i m_currentNpcSprite;

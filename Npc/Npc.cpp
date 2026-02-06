@@ -94,44 +94,48 @@ void Npc::checkPlayerInView(std::vector<WorldEntities>& worldEntities) {
 	sf::Vector2i npcClosestTile = Helper::pixelToTile(m_npcPos);
 	int index = Helper::tileToIndex(npcClosestTile);
 	switch (m_viewDirection) {
-	case Up:
-		for (int v = 0; v < viewDistanceTiles; v++) {
-			index = Helper::tileToIndex(npcClosestTile + DIR_UP * v);
-			if (worldEntities[index] == WE_PLAYER) {
-				std::cout << "Player spotted up!\n";
-				return;
+		case Up:
+			for (int v = 0; v < viewDistanceTiles; v++) {
+				index = Helper::tileToIndex(npcClosestTile + DIR_UP * v);
+				if (worldEntities[index] == WE_PLAYER) {
+					std::cout << "Player spotted up!\n";
+					onPlayerFound.invoke();
+					return;
+				}
 			}
-		}
-		break;
-	case Down:
-		for (int v = 0; v < viewDistanceTiles; v++) {
-			index = Helper::tileToIndex(npcClosestTile + DIR_DOWN * v);
-			if (worldEntities[index] == WE_PLAYER) {
-				std::cout << "Player spotted down!\n";
-				return;
+			break;
+		case Down:
+			for (int v = 0; v < viewDistanceTiles; v++) {
+				index = Helper::tileToIndex(npcClosestTile + DIR_DOWN * v);
+				if (worldEntities[index] == WE_PLAYER) {
+					std::cout << "Player spotted down!\n";
+					onPlayerFound.invoke();
+					return;
+				}
 			}
-		}
-		break;
-	case Left:
-		for (int v = 0; v < viewDistanceTiles; v++) {
-			index = Helper::tileToIndex(npcClosestTile + DIR_LEFT * v);
-			if (worldEntities[index] == WE_PLAYER) {
-				std::cout << "Player spotted left!\n";
-				return;
+			break;
+		case Left:
+			for (int v = 0; v < viewDistanceTiles; v++) {
+				index = Helper::tileToIndex(npcClosestTile + DIR_LEFT * v);
+				if (worldEntities[index] == WE_PLAYER) {
+					std::cout << "Player spotted left!\n";
+					onPlayerFound.invoke();
+					return;
+				}
 			}
-		}
-		break;
-	case Right:
-		for (int v = 0; v < viewDistanceTiles; v++) {
-			index = Helper::tileToIndex(npcClosestTile + DIR_RIGHT * v);
-			if (worldEntities[index] == WE_PLAYER) {
-				std::cout << "Player spotted right!\n";
-				return;
+			break;
+		case Right:
+			for (int v = 0; v < viewDistanceTiles; v++) {
+				index = Helper::tileToIndex(npcClosestTile + DIR_RIGHT * v);
+				if (worldEntities[index] == WE_PLAYER) {
+					std::cout << "Player spotted right!\n";
+					onPlayerFound.invoke();
+					return;
+				}
 			}
-		}
-		break;
-	default:
-		break;
+			break;
+		default:
+			break;
 	}
 }
 

@@ -10,18 +10,19 @@ const float frameDuration = 1.f / animationFPS;
 int main()
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	bool isPaused = false;
 
     sf::Clock clock;
     Player player;
     World world;
-    Camera camera;
-    Game game = Game(player);
-
-	game.setupLevel();
 
     sf::RenderWindow window(sf::VideoMode({1300, 800}), "Top Down RPG", sf::Style::Default, sf::State::Windowed);
     world.loadTileMaps();
 
+    Game game = Game(window, player);
+    game.setupLevel();
+
+    Camera camera;
     camera.setupCamera(player.getCamPosition());
     window.setView(camera.viewCam);
 
@@ -34,6 +35,7 @@ int main()
             if (event->is<sf::Event::Closed>())
                 window.close();
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 			window.close();
         }
@@ -45,14 +47,14 @@ int main()
             frame = (frame + 1) % 4;
             timeAccumulator -= frameDuration;
         }
-
         player.handleInput(frame, world.getCollisionMap());
 
-        player.update(dt, world.m_worldEntities);
+        //player.update(dt, world.m_worldEntities);
 		game.runLevel(dt, frame, world.m_worldEntities);
         
 		camera.updateCamera(player.getCamPosition(), dt);
         window.setView(camera.viewCam);
+
         window.clear();
 
         world.renderTileMaps(window, Floor);

@@ -1,10 +1,12 @@
 #include "Button.h"
+#include <string>
 
-Button::Button(const sf::Vector2f& size, const sf::Vector2f& position) : font("Assets/Fonts/pixantiqua.ttf"), label(font) {
+Button::Button(const sf::Vector2f& size, const sf::Vector2f& position, const std::string& text) : font("Assets/Fonts/pixantiqua.ttf"), label(font) {
     shape.setSize(size);
     label.setFont(font);
     shape.setPosition(position);
     shape.setFillColor(sf::Color(100, 100, 100));
+	setText(text);
 }
 
 void Button::setText(const std::string& text, unsigned int size) {

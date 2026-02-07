@@ -3,7 +3,7 @@
 
 class Button {
 public:
-    Button(const sf::Vector2f& size, const sf::Vector2f& position);
+    Button(const sf::Vector2f& size, const sf::Vector2f& position, const std::string& text);
 
     void setText(const std::string& text, unsigned int size = 24);
 

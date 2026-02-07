@@ -26,8 +26,6 @@ Game::Game(sf::RenderWindow& window, Player& player, World& world)
 		static_cast<float>(windowSize.x) / textureSize.x,
 		static_cast<float>(windowSize.y) / textureSize.y
 		});
-	startGameButton.setText("Start Game");
-	exitGameButton.setText("Exit");
 }
 
 void Game::setupLevel()
@@ -41,13 +39,13 @@ void Game::setupLevel()
 
 	m_npcs.clear();
 	m_player.resetPlayer();
+	m_world.loadTileMaps();
 
 	switch (m_gameLevel)
 	{
 		case GL_None:
 			break;
 		case GL_One:
-			m_world.loadTileMaps();
 			m_npcs.resize(3);
 			m_npcs[0] = Npc(NpcType::Goblin, { 3, 3 }, { 7, 3 });
 			m_npcs[1] = Npc(NpcType::Goblin, { 5, 4 }, { 5, 7 });
@@ -62,6 +60,18 @@ void Game::setupLevel()
 			m_gameState = GS_Playing;
 			break;
 		case GL_Two:
+			m_npcs.resize(2);
+			m_npcs[0] = Npc(NpcType::Goblin, { 4, 7 }, { 4, 7 });
+			m_npcs[0].faceDirection(LookLeft);
+			m_npcs[1] = Npc(NpcType::Goblin, { 6, 8 }, { 6, 8 });
+			m_npcs[1].faceDirection(LookRight);
+
+			for (Npc& npc : m_npcs) {
+				npc.onPlayerFound.subscribe([this]() {
+					playerCaught = true;
+					});
+			}
+			m_gameState = GS_Playing;
 			break;
 		case GL_Three:
 			break;
@@ -135,22 +145,30 @@ void Game::render(sf::RenderWindow& window)
 	case GS_LevelComplete:
 		window.setView(window.getDefaultView());
 		setOverlayText("Level complete!");
-		resetButton.setText("Reset level");
 
 		window.draw(overlay);
 		window.draw(overlayText);
 		resetButton.draw(window);
+		nextLevelButton.draw(window);
+
 		resetButton.update(window);
+		nextLevelButton.update(window);
 
 		if (resetButton.isClicked()) {
 			std::cout << "Resetting level...\n";
 			setupLevel();
 		}
+
+		if (nextLevelButton.isClicked()) {
+			int currentLevel = (int)m_gameLevel;
+			m_gameLevel = (GameLevel)++currentLevel;
+			setupLevel();
+			m_gameState = GS_Playing;
+		}
 		break;
 	case GS_GameOver:
 		window.setView(window.getDefaultView());
 		setOverlayText("You got caught!");
-		resetButton.setText("Reset level");
 
 		window.draw(overlay);
 		window.draw(overlayText);

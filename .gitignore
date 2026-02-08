@@ -16,6 +16,9 @@ cmake-build-*/
 *.dylib
 *.exe
 
+TopDownRpg-SFML/
+x64/
+
 # =========================
 # CMake
 # =========================

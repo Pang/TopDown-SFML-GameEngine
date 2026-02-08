@@ -17,7 +17,7 @@ cmake-build-*/
 *.exe
 
 TopDownRpg-SFML/
-x64/
+
 
 # =========================
 # CMake

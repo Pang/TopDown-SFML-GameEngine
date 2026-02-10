@@ -23,6 +23,7 @@ private:
 	void wait(float dt);
 
 	void checkPlayerInView(std::vector<WorldEntities>& worldEntities);
+	void spottedPlayer(std::vector<WorldEntities>& worldEntities, sf::Vector2i dir);
 
 public:
 	Event onPlayerFound;

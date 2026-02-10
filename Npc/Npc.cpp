@@ -95,47 +95,35 @@ void Npc::checkPlayerInView(std::vector<WorldEntities>& worldEntities) {
 	int index = Helper::tileToIndex(npcClosestTile);
 	switch (m_viewDirection) {
 		case Up:
-			for (int v = 0; v < viewDistanceTiles; v++) {
-				index = Helper::tileToIndex(npcClosestTile + DIR_UP * v);
-				if (worldEntities[index] == WE_PLAYER) {
-					std::cout << "Player spotted up!\n";
-					onPlayerFound.invoke();
-					return;
-				}
-			}
+			spottedPlayer(worldEntities, DIR_UP);
 			break;
 		case Down:
-			for (int v = 0; v < viewDistanceTiles; v++) {
-				index = Helper::tileToIndex(npcClosestTile + DIR_DOWN * v);
-				if (worldEntities[index] == WE_PLAYER) {
-					std::cout << "Player spotted down!\n";
-					onPlayerFound.invoke();
-					return;
-				}
-			}
+			spottedPlayer(worldEntities, DIR_DOWN);
 			break;
 		case Left:
-			for (int v = 0; v < viewDistanceTiles; v++) {
-				index = Helper::tileToIndex(npcClosestTile + DIR_LEFT * v);
-				if (worldEntities[index] == WE_PLAYER) {
-					std::cout << "Player spotted left!\n";
-					onPlayerFound.invoke();
-					return;
-				}
-			}
+			spottedPlayer(worldEntities, DIR_LEFT);
 			break;
 		case Right:
-			for (int v = 0; v < viewDistanceTiles; v++) {
-				index = Helper::tileToIndex(npcClosestTile + DIR_RIGHT * v);
-				if (worldEntities[index] == WE_PLAYER) {
-					std::cout << "Player spotted right!\n";
-					onPlayerFound.invoke();
-					return;
-				}
-			}
+			spottedPlayer(worldEntities, DIR_RIGHT);
 			break;
 		default:
 			break;
+	}
+}
+
+void Npc::spottedPlayer(std::vector<WorldEntities>& worldEntities, sf::Vector2i dir) {
+	sf::Vector2i npcClosestTile = Helper::pixelToTile(m_npcPos);
+	int index = Helper::tileToIndex(npcClosestTile);
+	for (int v = 0; v < viewDistanceTiles; v++) {
+		index = Helper::tileToIndex(npcClosestTile + dir * v);
+		if (worldEntities[index] == WE_OBJECT) {
+			break;
+		}
+		if (worldEntities[index] == WE_PLAYER) {
+			std::cout << "Player spotted right!\n";
+			onPlayerFound.invoke();
+			return;
+		}
 	}
 }
 

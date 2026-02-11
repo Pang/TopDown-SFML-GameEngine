@@ -122,8 +122,12 @@ void Npc::spottedPlayer(std::vector<WorldEntities>& worldEntities, sf::Vector2i 
 	sf::Vector2i npcClosestTile = Helper::pixelToTile(m_npcPos);
 	int index = Helper::tileToIndex(npcClosestTile);
 
+	bool skippedTile = false;
 	for (int v = 0; v < viewDistanceTiles; v++) {
-		if (!NpcState::Waiting) v++;
+		if (!skippedTile && m_state != NpcState::Waiting) {
+			skippedTile = true;
+			continue;
+		}
 
 		int currentRow = index / 11;
 		index = Helper::tileToIndex(npcClosestTile + dir * v);

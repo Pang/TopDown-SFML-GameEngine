@@ -166,7 +166,7 @@ void Game::render(sf::RenderWindow& window)
 		exitGameButton.update(window);
 
 		if (startGameButton.isClicked()) {
-			m_gameLevel = GL_Four;
+			m_gameLevel = GL_One;
 			setupLevel();
 			m_gameState = GS_Playing;
 		}

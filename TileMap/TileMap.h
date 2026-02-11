@@ -12,6 +12,7 @@ public:
         unsigned int width,
         unsigned int height
     );
+    void clear();
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

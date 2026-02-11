@@ -19,7 +19,7 @@ public:
 private:
 	std::vector<int> loadCSV(unsigned& outWidth, unsigned& outHeight, const std::string& fileName);
 	std::vector<int> loadMapWithCSV(TileMap& tileMap, sf::Texture& texture, const std::string& textureFile, const std::string& csvFile);
-	void SetBorderCollisionTiles(std::vector<int>& tiles);
+	void setBorderCollisionTiles(std::vector<int>& tiles);
 
 public:
 	std::vector<WorldEntities> m_worldEntities;

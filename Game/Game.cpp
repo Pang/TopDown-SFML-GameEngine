@@ -44,7 +44,7 @@ void Game::setupLevel()
 
 	m_npcs.clear();
 	m_world.loadTileMaps();
-
+	m_world.clearMapObjects();
 	switch (m_gameLevel)
 	{
 		case GL_None:
@@ -102,6 +102,22 @@ void Game::setupLevel()
 			m_gameState = GS_Playing;
 			break;
 		case GL_Four:
+			m_player.resetPlayer({ 1, 3 });
+			m_world.loadLevelObjects("4");
+			m_npcs.resize(4);
+			m_npcs[0] = Npc(NpcType::SkeletonWarrior, { 3, 5 }, { 3, 10 });
+			m_npcs[1] = Npc(NpcType::SkeletonWarrior, { 5, 7 }, { 5, 10 });
+			m_npcs[2] = Npc(NpcType::SkeletonWarrior, { 8, 7 }, { 8, 7 });
+			m_npcs[2].faceDirection(LookDown);
+			m_npcs[3] = Npc(NpcType::SkeletonWarrior, { 9, 5 }, { 5, 5 });
+
+			for (Npc& npc : m_npcs) {
+				npc.onPlayerFound.subscribe([this]() {
+					playerCaught = true;
+					});
+			}
+			m_gameState = GS_Playing;
+			break;
 			break;
 		case GL_Five:
 			break;
@@ -150,7 +166,7 @@ void Game::render(sf::RenderWindow& window)
 		exitGameButton.update(window);
 
 		if (startGameButton.isClicked()) {
-			m_gameLevel = GL_Three;
+			m_gameLevel = GL_Four;
 			setupLevel();
 			m_gameState = GS_Playing;
 		}

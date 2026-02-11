@@ -65,6 +65,12 @@ bool TileMap::load(
     return true;
 }
 
+void TileMap::clear()
+{
+    m_vertices.clear();
+    m_tileset = nullptr;
+}
+
 void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();

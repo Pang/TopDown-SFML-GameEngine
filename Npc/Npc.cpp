@@ -121,13 +121,24 @@ void Npc::checkPlayerInView(std::vector<WorldEntities>& worldEntities) {
 void Npc::spottedPlayer(std::vector<WorldEntities>& worldEntities, sf::Vector2i dir) {
 	sf::Vector2i npcClosestTile = Helper::pixelToTile(m_npcPos);
 	int index = Helper::tileToIndex(npcClosestTile);
+
 	for (int v = 0; v < viewDistanceTiles; v++) {
+
+		int currentRow = index / 11;
 		index = Helper::tileToIndex(npcClosestTile + dir * v);
+		if (worldEntities.size() < index) break;
+		if (dir == DIR_LEFT || dir == DIR_RIGHT) {
+			int tileViewingRow = index / 11;
+			if (currentRow != tileViewingRow) break;
+		}
+
 		if (worldEntities[index] == WE_OBJECT) {
 			break;
 		}
 		if (worldEntities[index] == WE_PLAYER) {
 			std::cout << "Player spotted right!\n";
+			std::cout << "NPC at tile: " << npcClosestTile.x << ", " << npcClosestTile.y << " looking in direction: " << m_viewDirection << "\n";
+
 			onPlayerFound.invoke();
 			return;
 		}

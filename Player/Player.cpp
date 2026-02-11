@@ -9,7 +9,7 @@ static constexpr int TILE_ROW_LENGTH = 11;
 
 Player::Player()
 {
-    resetPlayer();
+    //resetPlayer({ 2, 10 });
 
     if (!m_playerTexture.loadFromFile("Assets/Snoblin Villagers/Human Nobleman/human_nobleman.png"))
     {
@@ -17,8 +17,8 @@ Player::Player()
     }
 }
 
-void Player::resetPlayer() {
-    m_tilePos = { 2, 10 };
+void Player::resetPlayer(sf::Vector2f startingPosition) {
+    m_tilePos = startingPosition;
     sf::Vector2f startPos = { m_tilePos.x * TILE_SIZE * .5f, m_tilePos.y * TILE_SIZE * .5f };
     m_isFacingLeft = false;
     m_currentPos = startPos;

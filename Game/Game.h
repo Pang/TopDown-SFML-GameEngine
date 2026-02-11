@@ -37,6 +37,6 @@ private:
 
 	Button startGameButton = Button({ 200.f, 40.f }, { 550.f, 50.f }, "Start Game");
 	Button exitGameButton = Button({ 200.f, 40.f }, { 550.f, 115.f }, "Exit");
-	Button resetButton = Button({ 200.f, 40.f }, { 10.f, 10.f }, "Reset level");
-	Button nextLevelButton = Button({ 200.f, 40.f }, { 1090.f, 10.f }, "Next level");
+	Button resetButton = Button({ 200.f, 40.f }, { 10.f, 10.f }, "Retry");
+	Button nextLevelButton = Button({ 200.f, 40.f }, { 1090.f, 10.f }, "Continue");
 };

@@ -43,7 +43,6 @@ void Game::setupLevel()
 	}
 
 	m_npcs.clear();
-	m_player.resetPlayer();
 	m_world.loadTileMaps();
 
 	switch (m_gameLevel)
@@ -51,6 +50,7 @@ void Game::setupLevel()
 		case GL_None:
 			break;
 		case GL_One:
+			m_player.resetPlayer({ 2, 10 });
 			m_world.loadLevelObjects("1");
 			m_npcs.resize(3);
 			m_npcs[0] = Npc(NpcType::GoblinRogue, { 3, 3 }, { 7, 3 });
@@ -66,11 +66,15 @@ void Game::setupLevel()
 			m_gameState = GS_Playing;
 			break;
 		case GL_Two:
-			m_npcs.resize(2);
-			m_npcs[0] = Npc(NpcType::Goblin, { 4, 7 }, { 4, 7 });
+			m_player.resetPlayer({ 3, 10 });
+			m_world.loadLevelObjects("2");
+			m_npcs.resize(5);
+			m_npcs[0] = Npc(NpcType::Pikeman, { 9, 7 }, { 9, 7 });
 			m_npcs[0].faceDirection(LookLeft);
-			m_npcs[1] = Npc(NpcType::Goblin, { 6, 8 }, { 6, 8 });
-			m_npcs[1].faceDirection(LookRight);
+			m_npcs[1] = Npc(NpcType::HeavyKnight, { 4, 8 }, { 8, 8 });
+			m_npcs[2] = Npc(NpcType::Pikeman, { 3, 7 }, { 3, 3 });
+			m_npcs[3] = Npc(NpcType::HeavyKnight, { 1, 5 }, { 1, 10 });
+			m_npcs[4] = Npc(NpcType::Pikeman, { 5, 5 }, { 9, 5 });
 
 			for (Npc& npc : m_npcs) {
 				npc.onPlayerFound.subscribe([this]() {
@@ -130,7 +134,7 @@ void Game::render(sf::RenderWindow& window)
 		exitGameButton.update(window);
 
 		if (startGameButton.isClicked()) {
-			m_gameLevel = GL_One;
+			m_gameLevel = GL_Two;
 			setupLevel();
 			m_gameState = GS_Playing;
 		}
